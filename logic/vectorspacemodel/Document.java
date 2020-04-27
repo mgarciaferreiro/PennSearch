@@ -25,16 +25,16 @@ public class Document implements Comparable<Document> {
 	/**
 	 * The name of the file to read.
 	 */
-	private String filename;
+	private String name;
 	
 	/**
 	 * The constructor.
 	 * It takes in the name of a file to read.
 	 * It will read the file and pre-process it.
-	 * @param filename the name of the file
+	 * @param name the name of the file
 	 */
-	public Document(String filename) {
-		this.filename = filename;
+	public Document(String name) {
+		this.name = name;
 		termFrequency = new HashMap<String, Integer>();
 		
 		readFileAndPreProcess();
@@ -50,8 +50,8 @@ public class Document implements Comparable<Document> {
 	 */
 	private void readFileAndPreProcess() {
 		try {
-			Scanner in = new Scanner(new File(filename));
-			System.out.println("Reading file: " + filename + " and preprocessing");
+			Scanner in = new Scanner(new File(name));
+			System.out.println("Reading file: " + name + " and preprocessing");
 			
 			while (in.hasNext()) {
 				String nextWord = in.next();
@@ -100,21 +100,21 @@ public class Document implements Comparable<Document> {
 	 * The overriden method from the Comparable interface.
 	 */
 	public int compareTo(Document other) {
-		return filename.compareTo(other.getFileName());
+		return name.compareTo(other.getName());
 	}
 
 	/**
-	 * @return the filename
+	 * @return the name
 	 */
-	private String getFileName() {
-		return filename;
+	public String getName() {
+		return name;
 	}
 	
 	/**
 	 * This method is used for pretty-printing a Document object.
-	 * @return the filename
+	 * @return the name
 	 */
 	public String toString() {
-		return filename;
+		return name;
 	}
 }
