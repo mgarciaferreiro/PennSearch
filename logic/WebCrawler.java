@@ -8,6 +8,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import data.DBManager;
+
 /**
  * This class handles crawling through the Penn websites and storing the data in
  * the database.
@@ -15,8 +17,9 @@ import org.jsoup.select.Elements;
  * @author Peter Chen
  */
 public class WebCrawler {
-    HashSet<String> visitedSet = new HashSet<>();
-    ArrayList<String> ls = new ArrayList<>();
+    private HashSet<String> visitedSet = new HashSet<>();
+    private ArrayList<String> ls = new ArrayList<>();
+    private DBManager db = new DBManager();
 
     /**
      * checks if a URL is Penn-related. This ensures that we are staying
@@ -37,9 +40,12 @@ public class WebCrawler {
     private void discover(String sourceURL) {
         try {
             Document doc = Jsoup.connect(sourceURL).get();
+            db.addWebsite(sourceURL, doc.body().text());
+            
             Elements links = doc.getElementsByTag("a");
             for (Element link : links) {
                 String url = link.attr("abs:href");
+                
                 if (!visitedSet.contains(url) && isValid(url)) {
                     ls.add(url);
                     visitedSet.add(url);
@@ -61,16 +67,10 @@ public class WebCrawler {
 
         while (!ls.isEmpty() && visitedSet.size() <= maxLinkNo) {
             String sourceURL = ls.remove(0);
-            System.out.println("the link " + sourceURL + " is popped");
+            // System.out.println("the link " + sourceURL + " is popped");
             discover(sourceURL);
         }
 
-        for (String l : visitedSet) {
-            System.out.println(l);
-        }
-    }
-
-    public static void main(String[] args) {
-        WebCrawler wc = new WebCrawler();
+        db.close();
     }
 }
