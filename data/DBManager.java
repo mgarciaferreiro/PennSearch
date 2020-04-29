@@ -16,8 +16,8 @@ public class DBManager {
     private MongoDatabase database = mongoClient.getDatabase("pennsearch");
     private MongoCollection<Document> collection = database.getCollection("websites");
 
-    public void addWebsite(String url, String content, ArrayList<String> neighbors) {
-        Document doc = new Document("url", url).append("content", content).append("neighbors", neighbors);
+    public void addWebsite(String url, String title, String content, ArrayList<String> neighbors) {
+        Document doc = new Document("url", url).append("title", title).append("content", content).append("neighbors", neighbors);
         collection.insertOne(doc);
     }
 

@@ -53,7 +53,7 @@ public class WebCrawler {
                 }
             }
 
-            db.addWebsite(sourceURL, doc.body().text(), neighbors);
+            db.addWebsite(sourceURL, doc.title(), doc.body().text(), neighbors);
 
         } catch (Exception e) {
             e.printStackTrace();
