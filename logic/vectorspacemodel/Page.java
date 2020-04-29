@@ -1,10 +1,7 @@
 package logic.vectorspacemodel;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -113,6 +110,13 @@ public class Page implements Comparable<Page> {
 	 */
 	public String getUrl() {
 		return url;
+	}
+
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
 	}
 	
 	/**

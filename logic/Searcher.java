@@ -22,7 +22,11 @@ public class Searcher {
     }
 
     public void search(String query) {
-        ranker.getSortedResults(query);
+        List<Page> pages = ranker.getSortedResults(query);
+        for (Page page : pages) {
+            System.out.println(page.getTitle());
+            System.out.println(page.getUrl());
+        }
     }
 
 }

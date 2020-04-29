@@ -3,7 +3,6 @@ package logic;
 import java.util.*;
 import java.util.Map.Entry;
 
-import data.DBManager;
 import logic.vectorspacemodel.*;
 
 /**
