@@ -16,22 +16,22 @@ public class Corpus {
 	/**
 	 * An arraylist of all documents in the corpus.
 	 */
-	private ArrayList<Document> documents;
+	private ArrayList<Page> pages;
 	
 	/**
 	 * The inverted index. 
 	 * It will map a term to a set of documents that contain that term.
 	 */
-	private HashMap<String, Set<Document>> invertedIndex;
+	private HashMap<String, Set<Page>> invertedIndex;
 	
 	/**
 	 * The constructor - it takes in an arraylist of documents.
 	 * It will generate the inverted index based on the documents.
 	 * @param documents the list of documents
 	 */
-	public Corpus(ArrayList<Document> documents) {
-		this.documents = documents;
-		invertedIndex = new HashMap<String, Set<Document>>();
+	public Corpus(ArrayList<Page> pages) {
+		this.pages = pages;
+		invertedIndex = new HashMap<String, Set<Page>>();
 		
 		createInvertedIndex();
 	}
@@ -42,16 +42,16 @@ public class Corpus {
 	private void createInvertedIndex() {
 		System.out.println("Creating the inverted index");
 		
-		for (Document document : documents) {
-			Set<String> terms = document.getTermList();
+		for (Page pages : pages) {
+			Set<String> terms = pages.getTermList();
 			
 			for (String term : terms) {
 				if (invertedIndex.containsKey(term)) {
-					Set<Document> list = invertedIndex.get(term);
-					list.add(document);
+					Set<Page> list = invertedIndex.get(term);
+					list.add(pages);
 				} else {
-					Set<Document> list = new TreeSet<Document>();
-					list.add(document);
+					Set<Page> list = new TreeSet<Page>();
+					list.add(pages);
 					invertedIndex.put(term, list);
 				}
 			}
@@ -65,8 +65,8 @@ public class Corpus {
 	 */
 	public double getInverseDocumentFrequency(String term) {
 		if (invertedIndex.containsKey(term)) {
-			double size = documents.size();
-			Set<Document> list = invertedIndex.get(term);
+			double size = pages.size();
+			Set<Page> list = invertedIndex.get(term);
 			double documentFrequency = list.size();
 			
 			return Math.log10(size / documentFrequency);
@@ -78,14 +78,14 @@ public class Corpus {
 	/**
 	 * @return the documents
 	 */
-	public ArrayList<Document> getDocuments() {
-		return documents;
+	public ArrayList<Page> getDocuments() {
+		return pages;
 	}
 
 	/**
 	 * @return the invertedIndex
 	 */
-	public HashMap<String, Set<Document>> getInvertedIndex() {
+	public HashMap<String, Set<Page>> getInvertedIndex() {
 		return invertedIndex;
 	}
 }
