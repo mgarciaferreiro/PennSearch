@@ -1,10 +1,12 @@
+import logic.WebCrawler;
 
 /**
- * Main
+ * Main function
  */
 public class Main {
     public static void main(String[] args) {
-        // TODO
         System.out.println("running...");
+        WebCrawler wc = new WebCrawler();
+        wc.crawl();
     }
 }
