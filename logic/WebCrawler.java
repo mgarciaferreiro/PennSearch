@@ -40,17 +40,21 @@ public class WebCrawler {
     private void discover(String sourceURL) {
         try {
             Document doc = Jsoup.connect(sourceURL).get();
-            db.addWebsite(sourceURL, doc.body().text());
-            
+            ArrayList<String> neighbors = new ArrayList<>();
+
             Elements links = doc.getElementsByTag("a");
             for (Element link : links) {
                 String url = link.attr("abs:href");
+                neighbors.add(url);
                 
                 if (!visitedSet.contains(url) && isValid(url)) {
                     ls.add(url);
                     visitedSet.add(url);
                 }
             }
+
+            db.addWebsite(sourceURL, doc.body().text(), neighbors);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
