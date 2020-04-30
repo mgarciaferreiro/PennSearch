@@ -22,3 +22,9 @@ cd backend
 gradle build
 ./gradlew bootRun
 ```
+
+### User Manual
+
+![PennSearch frontend](https://github.com/mgarciaferreiro/PennSearch/blob/master/PennSearchScreenshot.png)
+
+After doing the setup, you will be able to see this page on http://localhost:3000/. Type any query into the Search box to search Penn-related websites.
