@@ -22,13 +22,15 @@ public class Searcher {
         this.ranker = new Ranker(documents);
     }
 
-    public void search(String query) {
+    public List<PageSummary> search(String query) {
         List<Page> pages = ranker.getSortedResults(query);
+        ArrayList<PageSummary> result = new ArrayList<>();
         for (int i = 0; i < Math.min(pages.size() - 1, 30); i++) {
             Page page = pages.get(i);
-            System.out.println(page.getTitle());
-            System.out.println(page.getUrl());
+            result.add(new PageSummary(page.getUrl(), page.getTitle(), page.getContent(query)));
         }
+        
+        return result;
         // for (Page page : pages) {
         //     System.out.println(page.getTitle());
         //     System.out.println(page.getUrl());

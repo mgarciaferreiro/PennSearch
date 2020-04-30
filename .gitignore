@@ -22,5 +22,9 @@
 hs_err_pid*
 
 .DS_Store
-UI/node_modules
-UI/.next
+frontend/node_modules
+frontend/.next
+backend/.gradle
+backend/.vscode
+backend/bin
+backend/build
