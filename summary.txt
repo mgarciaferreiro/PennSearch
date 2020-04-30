@@ -1,0 +1,27 @@
+PennSearch
+
+Team members: 
+Baile Chen (Peter), Marta García Ferreiro
+
+Project category: 
+Implementation
+
+Description:
+Penn Search is a small search engine with a Javascript frontend for visualizing the results and a Java 
+backend that crawls Penn-related websites and allows the user to perform queries within those.
+Starting at https://www.upenn.edu/, we find all the external links in the html and follow 
+them and repeat this step for some time. We store all this crawled website content in a Mongo database 
+and allow the user to perform queries. Page Rank and the tf-idf vector for each page is calculated once 
+after getting all the website contents, so each query after that is relatively fast. The search results 
+are ranked by a score of page rank * cosine similarity between page and query, so both page authoritativeness 
+and relevance to query are taken into account.
+
+Relevant Topics: 
+This project is related to the topics covered in class of Information Networks (World Wide Web), 
+Document Search, and Graph Algorithms (BFS for web crawling and Page Rank).
+
+Work breakdown:
+Peter: crawling websites, storing website content on the database, Javascript UI, and integrating the Java 
+backend with Javascript frontend.
+Marta: reading contents from database, search, and ranking (modifying the vector space model from HW4 
+and implementing Page Rank).
