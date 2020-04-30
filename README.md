@@ -26,7 +26,7 @@ gradle build
 ./gradlew bootRun
 ```
 
-Upon comlpetion, you should see something as the following in your terminal.
+Upon comlpetion, you should see something as the following in your terminal. Note that it will be running when it says 75% so you don't need to wait more.
 ![backend terminal](https://github.com/mgarciaferreiro/PennSearch/blob/master/screenshots/backend-terminal.png)
 
 **Database**
