@@ -13,6 +13,9 @@ npm install
 npm run dev
 ```
 
+Upon completion, you should see something as the following in your terminal.
+![frontend terminal](https://github.com/mgarciaferreiro/PennSearch/blob/master/screenshots/frontend-terminal.png)
+
 **Backend**
 
 We are using Spring to set up the Rest API in Java which uses Gradle to manage dependencies. Install Gradle [here](https://gradle.org/install/) if you have not. (`brew install gradle` is what I used). After that, do the following to start the backend Java server.
@@ -23,11 +26,14 @@ gradle build
 ./gradlew bootRun
 ```
 
+Upon comlpetion, you should see something as the following in your terminal.
+![backend terminal](https://github.com/mgarciaferreiro/PennSearch/blob/master/screenshots/backend-terminal.png)
+
 **Database**
 We are also using MongoDB for storing the websites. So make sure you have MongoDB installed on your local machine as well.
 
 ### User Manual
 
-![PennSearch frontend](https://github.com/mgarciaferreiro/PennSearch/blob/master/PennSearchScreenshot.png)
+![PennSearch frontend](https://github.com/mgarciaferreiro/PennSearch/blob/master/screenshots/PennSearchScreenshot.png)
 
 After doing the setup, you will be able to see this page on http://localhost:3000/. Type any query into the Search box to search Penn-related websites.
