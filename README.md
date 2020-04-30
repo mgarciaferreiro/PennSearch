@@ -1,4 +1,24 @@
 # PennSearch (NETS 150 Final Project)
 
-### Configuration
-This project requires several dependencies to run. These are imported directly from Jar packages. So, before running the program, make sure that all the Jar files are loaded into VScode. To see this, click on the tab called Java Dependencies in the left bottom panel to expand it. Click on Referenced Libraries to expand it and you should see `bson-3.4.3.jar`, `jsoup-1.13.1.jar`, `mongodb-driver-3.4.3.jar`, and `mongodb-driver-core-3.4.3.jar`. If any package is not there, hover on Referenced Libraries and you should see a **+** sign. Click the plus sign and change the directory to the `lib` folder. Add the misssing packages from there.
+There are two parts to this project: a Javascript frontend for visualizing the results and a Java backend for computing the page rank and the ordering of websites.
+
+### Setup
+**Frontend**
+
+We are using NextJS for writing the frontend code. So, make sure you have `npm` and `node` installed on your machine. Then, type the following in your terminal to start the frontend JS website.
+
+```
+cd frontend
+npm install
+npm run dev
+```
+
+**Backend**
+
+We are using Spring to set up the Rest API in Java which uses Gradle to manage dependencies. Install Gradle [here](https://gradle.org/install/) if you have not. (`brew install gradle` is what I used). After that, do the following to start the backend Java server.
+
+```
+cd backend
+gradle build
+./gradlew bootRun
+```

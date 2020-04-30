@@ -119,6 +119,29 @@ public class Page implements Comparable<Page> {
 	public String getTitle() {
 		return title;
 	}
+
+	/**
+	 * find the part of the content that is relevant to the query
+	 * @param query
+	 * @return a string that possibly includes the query
+	 */
+	public String getContent(String query) {
+		String[] queryWords = query.split(" ");
+		int idx = -1;
+		String s = "";
+		for (String word : queryWords) {
+			idx = content.indexOf(word);
+			if (idx != -1) {
+				s += (content.substring(Math.max(0, idx-100), Math.min(content.length(), idx+100)) + " ... ");
+			}
+		}
+
+		if (s.isEmpty()) {
+			s = content.substring(0, 200) + " ... ";
+		}
+
+		return s;
+	}
 	
 	/**
 	 * This method is used for pretty-printing a Document object.

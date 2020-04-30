@@ -74,7 +74,7 @@ public class WebCrawler {
         discover(startURL);
 
         // set a bound on the number of URL to prevent it from running infinitely
-        int maxLinkNo = 1000;
+        int maxLinkNo = 100;
 
         while (!ls.isEmpty() && crawledNumber < maxLinkNo) {
             String sourceURL = ls.remove(0);
