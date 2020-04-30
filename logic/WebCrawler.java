@@ -29,8 +29,7 @@ public class WebCrawler {
      * @return true is the url is valid, false otherwise
      */
     private Boolean isValid(String url) {
-        if (url.contains("http") && url.contains("penn")) return true;
-        return false;
+        return url.contains("http") && url.contains("penn") && !url.contains("#");
     }
 
     /**
@@ -46,11 +45,13 @@ public class WebCrawler {
             Elements links = doc.getElementsByTag("a");
             for (Element link : links) {
                 String url = link.attr("abs:href");
-                neighbors.add(url);
-                
-                if (!visitedSet.contains(url) && isValid(url)) {
-                    ls.add(url);
-                    visitedSet.add(url);
+
+                if (isValid(url)) {
+                    neighbors.add(url);
+                    if (!visitedSet.contains(url)) {
+                        ls.add(url);
+                        visitedSet.add(url);
+                    }
                 }
             }
 
@@ -62,6 +63,7 @@ public class WebCrawler {
             crawledNumber++;
 
         } catch (Exception e) {
+            System.out.println("Error reading " + sourceURL);
             e.printStackTrace();
         }
     }
