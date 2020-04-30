@@ -12,21 +12,27 @@ import logic.vectorspacemodel.*;
  */
 public class Searcher {
 
-    private DBManager db = new DBManager();
+    private DBManager db;
     private Ranker ranker;
     private ArrayList<Page> documents;
 
     public Searcher() {
+        this.db = new DBManager();
         this.documents = db.getPagesFromDb();
         this.ranker = new Ranker(documents);
     }
 
     public void search(String query) {
         List<Page> pages = ranker.getSortedResults(query);
-        for (Page page : pages) {
+        for (int i = 0; i < Math.min(pages.size() - 1, 30); i++) {
+            Page page = pages.get(i);
             System.out.println(page.getTitle());
             System.out.println(page.getUrl());
         }
+        // for (Page page : pages) {
+        //     System.out.println(page.getTitle());
+        //     System.out.println(page.getUrl());
+        // }
     }
 
 }

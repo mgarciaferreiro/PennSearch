@@ -30,6 +30,7 @@ public class Page implements Comparable<Page> {
 	 * @param url the url of the page
 	 * @param title the title of the page
 	 * @param content the content of the page
+	 * @param neighbors links to other pages in the page
 	 */
 	public Page(String url, String title, String content, List<String> neighbors) {
 		this.url = url;

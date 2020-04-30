@@ -16,6 +16,9 @@ public class Ranker {
     private Map<String, List<String>> websiteGraph;
     private ArrayList<Page> documents;
 
+    Corpus corpus;
+    VectorSpaceModel vectorSpace;
+
     // maps page url to page rank
     private Map<String, Double> prMap;
 
@@ -23,9 +26,14 @@ public class Ranker {
 
         this.documents = documents;
         this.websiteGraph = new HashMap<>();
+
         for (Page page : documents) {
             websiteGraph.put(page.getUrl(), page.getNeighbors());
         }
+
+        // create vector space model from documents
+        this.corpus = new Corpus(documents);
+        this.vectorSpace = new VectorSpaceModel(corpus);
 
         // calculate page rank values
         Map<String, Double> prValueMap = new HashMap<>();
@@ -41,12 +49,8 @@ public class Ranker {
         LinkedList<Page> sortedResults = new LinkedList<Page>();
         Map<Page, Double> pageToScoreMap = new HashMap<>();
         Page queryPage = new Page("", "", query, new ArrayList<>());
-        documents.add(queryPage);
 
-        Corpus corpus = new Corpus(documents);
-        VectorSpaceModel vectorSpace = new VectorSpaceModel(corpus);
-
-        documents.remove(queryPage);
+        vectorSpace.createQueryTfIdfVector(queryPage);
 
         for (Page doc : documents) {
             
@@ -60,8 +64,8 @@ public class Ranker {
             if (prMap.containsKey(url)) {
                 prValue = prMap.get(url);
             }
-            double cosineSimilarity = vectorSpace.cosineSimilarity(queryPage, doc);
 
+            double cosineSimilarity = vectorSpace.cosineSimilarity(queryPage, doc);
             double score = prValue * cosineSimilarity;
             
             if (score > 0) {
