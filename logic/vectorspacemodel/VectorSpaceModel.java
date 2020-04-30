@@ -7,7 +7,7 @@ import java.util.Set;
  * This class implements the Vector-Space model.
  * It takes a corpus and creates the tf-idf vectors for each document.
  * @author swapneel
- *
+ * Modified by Marta Garcia Ferreiro
  */
 public class VectorSpaceModel {
 	
@@ -22,6 +22,13 @@ public class VectorSpaceModel {
 	 * The second hashmap maps a term to its tf-idf weight for this document.
 	 */
 	private HashMap<Page, HashMap<String, Double>> tfIdfWeights;
+
+	/**
+	 * The query tf-idf weight vector.
+	 * It's separated from the corpus tf-idf weight vectors so we don't have to recompute all 
+	 * of them for each new query.
+	 */
+	private HashMap<String, Double> queryTfIdfWeights;
 	
 	/**
 	 * The constructor.
@@ -51,9 +58,10 @@ public class VectorSpaceModel {
 				
 				double weight = tf * idf;
 				
-				weights.put(term, weight);
+				if (weight > 0) {
+					weights.put(term, weight);
+				}
 			}
-			//System.out.println(weights);
 			tfIdfWeights.put(document, weights);
 		}
 	}
@@ -63,9 +71,12 @@ public class VectorSpaceModel {
 	 * @param document the document whose magnitude is calculated.
 	 * @return the magnitude
 	 */
-	private double getMagnitude(Page document) {
+	private double getMagnitude(Page document, boolean isQuery) {
 		double magnitude = 0;
 		HashMap<String, Double> weights = tfIdfWeights.get(document);
+		if (isQuery) {
+			weights = queryTfIdfWeights;
+		}
 		
 		for (double weight : weights.values()) {
 			magnitude += weight * weight;
@@ -75,31 +86,56 @@ public class VectorSpaceModel {
 	}
 	
 	/**
-	 * This will take two documents and return the dot product.
-	 * @param d1 Document 1
-	 * @param d2 Document 2
+	 * This will take a query document and another document and return the dot product.
+	 * @param query Query document
+	 * @param doc Document 2
 	 * @return the dot product of the documents
 	 */
-	private double getDotProduct(Page d1, Page d2) {
+	private double getDotProduct(Page query, Page doc) {
 		double product = 0;
-		HashMap<String, Double> weights1 = tfIdfWeights.get(d1);
-		HashMap<String, Double> weights2 = tfIdfWeights.get(d2);
+		HashMap<String, Double> weights2 = tfIdfWeights.get(doc);
 		
-		for (String term : weights1.keySet()) {
-			product += weights1.get(term) * weights2.get(term);
+		for (String term : queryTfIdfWeights.keySet()) {
+			double weight1 = queryTfIdfWeights.get(term);
+			double weight2 = 0;
+			if (weights2.containsKey(term)) {
+				weight2 = weights2.get(term);
+			}
+			product += weight1 * weight2;
 		}
 		
 		return product;
+	}
+
+	/**
+	 * This will compute the query tf-idf vector.
+	 * @param query Query document
+	 */
+	public void createQueryTfIdfVector(Page query) {
+		HashMap<String, Double> weights = new HashMap<String, Double>();
+			
+		for (String term : query.getTermList()) {
+			double tf = query.getTermFrequency(term);
+			double idf = corpus.getInverseDocumentFrequency(term); // 0 if the corpus doesn't contain the term
+			
+			double weight = tf * idf;
+			
+			if (weight > 0) {
+				weights.put(term, weight);
+			}
+		}
+
+		this.queryTfIdfWeights = weights;
 	}
 	
 	/**
 	 * This will return the cosine similarity of two documents.
 	 * This will range from 0 (not similar) to 1 (very similar).
-	 * @param d1 Document 1
-	 * @param d2 Document 2
+	 * @param query Query document
+	 * @param doc Document 2
 	 * @return the cosine similarity
 	 */
-	public double cosineSimilarity(Page d1, Page d2) {
-		return getDotProduct(d1, d2) / (getMagnitude(d1) * getMagnitude(d2));
+	public double cosineSimilarity(Page query, Page doc) {
+		return getDotProduct(query, doc) / (getMagnitude(query, true) * getMagnitude(doc, false));
 	}
 }

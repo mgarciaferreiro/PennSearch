@@ -46,11 +46,13 @@ public class WebCrawler {
             Elements links = doc.getElementsByTag("a");
             for (Element link : links) {
                 String url = link.attr("abs:href");
-                neighbors.add(url);
-                
-                if (!visitedSet.contains(url) && isValid(url)) {
-                    ls.add(url);
-                    visitedSet.add(url);
+
+                if (!url.contains("#") && isValid(url)) {
+                    neighbors.add(url);
+                    if (!visitedSet.contains(url)) {
+                        ls.add(url);
+                        visitedSet.add(url);
+                    }
                 }
             }
 
@@ -72,7 +74,7 @@ public class WebCrawler {
         discover(startURL);
 
         // set a bound on the number of URL to prevent it from running infinitely
-        int maxLinkNo = 1000;
+        int maxLinkNo = 2000;
 
         while (!ls.isEmpty() && crawledNumber < maxLinkNo) {
             String sourceURL = ls.remove(0);

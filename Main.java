@@ -11,6 +11,6 @@ public class Main {
         wc.crawl();
 
         Searcher searcher = new Searcher();
-        searcher.search("athletics baseball");
+        searcher.search("penn athletics baseball");
     }
 }
