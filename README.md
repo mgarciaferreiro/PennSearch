@@ -23,6 +23,9 @@ gradle build
 ./gradlew bootRun
 ```
 
+**Database**
+We are also using MongoDB for storing the websites. So make sure you have MongoDB installed on your local machine as well.
+
 ### User Manual
 
 ![PennSearch frontend](https://github.com/mgarciaferreiro/PennSearch/blob/master/PennSearchScreenshot.png)
