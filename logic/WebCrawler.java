@@ -29,8 +29,7 @@ public class WebCrawler {
      * @return true is the url is valid, false otherwise
      */
     private Boolean isValid(String url) {
-        if (url.contains("http") && url.contains("penn")) return true;
-        return false;
+        return url.contains("http") && url.contains("penn") && !url.contains("#");
     }
 
     /**
@@ -47,7 +46,7 @@ public class WebCrawler {
             for (Element link : links) {
                 String url = link.attr("abs:href");
 
-                if (!url.contains("#") && isValid(url)) {
+                if (isValid(url)) {
                     neighbors.add(url);
                     if (!visitedSet.contains(url)) {
                         ls.add(url);
