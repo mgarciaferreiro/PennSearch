@@ -2,6 +2,8 @@
 
 There are two parts to this project: a Javascript frontend for visualizing the results and a Java backend for computing the page rank and the ordering of websites.
 
+The code for the vector space model is taken from the NETS 150 HW 4, written by the NETS 150 staff at the University of Pennsylvania, and modified by us.
+
 ### Setup
 **Frontend**
 
